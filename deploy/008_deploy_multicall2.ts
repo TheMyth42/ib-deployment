@@ -3,16 +3,16 @@ import {DeployFunction} from 'hardhat-deploy/types';
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const {deployments, getNamedAccounts} = hre;
-  const {deploy, execute} = deployments;
+  const {deploy} = deployments;
 
-  const {deployer, admin} = await getNamedAccounts();
+  const {deployer} = await getNamedAccounts();
 
-  await deploy('Unitroller', {
+  await deploy('Multicall2', {
     from: deployer,
-    log: true,
+    log: true
   });
 
-  // await execute('Unitroller', { from: deployer }, '_setPendingAdmin', admin);
 };
 export default func;
-func.tags = ['Unitroller'];
+func.tags = ['Multicall2'];
+func.runAtTheEnd = true;

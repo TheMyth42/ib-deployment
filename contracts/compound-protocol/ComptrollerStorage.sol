@@ -1,7 +1,7 @@
 pragma solidity ^0.5.16;
 
 import "./CToken.sol";
-import "./PriceOracle/PriceOracle.sol";
+import "./PriceOracle.sol";
 
 contract UnitrollerAdminStorage {
     /**

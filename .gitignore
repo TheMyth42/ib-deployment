@@ -1,10 +1,15 @@
+
+.DS_Store
 node_modules/
 
 #Hardhat files
 cache/
 artifacts/
+deployments/
 
-.env
+.env*
 
-deployments/*/solcInputs/
 *.txt
+*.lock
+*.log
+

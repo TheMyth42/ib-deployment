@@ -2,11 +2,12 @@ import {deployments, ethers, getNamedAccounts} from 'hardhat';
 const {parseUnits} = ethers.utils;
 const {deploy, execute, get, getArtifact} = deployments;
 
-const crSymbol = 'iWETH';
-const crName = 'Iron Bank Wrapped Ethereum';
+const crSymbol = 'gBNB';
+const crName = 'Galaxy Finance BNB';
 
 async function main() {
-  const {deployer, wrappedNative} = await getNamedAccounts();
+  const {deployer} = await getNamedAccounts();
+  const wrappedNative = "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c";
   const comptrollerAddress = (await get('Unitroller')).address;
   const majorIRMAddress = (await get('MajorIRM')).address;
   const cTokenAdminAddress = (await get('CTokenAdmin')).address;

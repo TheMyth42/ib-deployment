@@ -1,6 +1,6 @@
 import {deployments, ethers, getNamedAccounts} from 'hardhat';
 const {parseUnits} = ethers.utils;
-const {deploy, get, getArtifact, save, run} = deployments;
+const {deploy, get, getArtifact} = deployments;
 
 enum IRM {
   Major = 'MajorIRM',
@@ -8,12 +8,11 @@ enum IRM {
   Gov = 'GovIRM'
 }
 
-const crSymbol = 'iOP';
-const crName = 'Iron Bank Optimism';
-const underlyingAddress = '0x4200000000000000000000000000000000000042';
-const interestRateModel = IRM.Major;
-const exchangeRate = '0.01';
-
+const crSymbol = 'gFDUSD';
+const crName = 'Galaxy Finance FDUSD';
+const underlyingAddress = '0xc5f0f7b66764F6ec8C8Dff7BA683102295E16409';
+const interestRateModel = IRM.Stable;
+const exchangeRate = '0.20';
 
 async function main() {
   const {deployer} = await getNamedAccounts();

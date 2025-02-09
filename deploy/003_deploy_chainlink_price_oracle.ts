@@ -3,16 +3,17 @@ import {DeployFunction} from 'hardhat-deploy/types';
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const {deployments, getNamedAccounts} = hre;
-  const {deploy, execute} = deployments;
+  const {deploy} = deployments;
 
-  const {deployer, admin} = await getNamedAccounts();
+  const {deployer} = await getNamedAccounts();
 
-  await deploy('Unitroller', {
+  const maxStalePeriod = 86400;
+
+  await deploy('ChainlinkOracle', {
     from: deployer,
     log: true,
+    args: [maxStalePeriod]
   });
-
-  // await execute('Unitroller', { from: deployer }, '_setPendingAdmin', admin);
 };
 export default func;
-func.tags = ['Unitroller'];
+func.tags = ['ChainlinkOracle'];

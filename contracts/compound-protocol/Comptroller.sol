@@ -3,12 +3,10 @@ pragma solidity ^0.5.16;
 import "./CToken.sol";
 import "./ErrorReporter.sol";
 import "./Exponential.sol";
-import "./PriceOracle/PriceOracle.sol";
+import "./PriceOracle.sol";
 import "./ComptrollerInterface.sol";
 import "./ComptrollerStorage.sol";
-import "./LiquidityMiningInterface.sol";
 import "./Unitroller.sol";
-import "./Governance/Comp.sol";
 
 /**
  * @title Compound's Comptroller Contract
@@ -41,9 +39,6 @@ contract Comptroller is ComptrollerV1Storage, ComptrollerInterface, ComptrollerE
 
     /// @notice Emitted when guardian is changed
     event NewGuardian(address oldGuardian, address newGuardian);
-
-    /// @notice Emitted when liquidity mining module is changed
-    event NewLiquidityMining(address oldLiquidityMining, address newLiquidityMining);
 
     /// @notice Emitted when an action is paused globally
     event ActionPaused(string action, bool pauseState);
@@ -1202,25 +1197,6 @@ contract Comptroller is ComptrollerV1Storage, ComptrollerInterface, ComptrollerE
         emit NewGuardian(oldGuardian, guardian);
 
         return uint256(Error.NO_ERROR);
-    }
-
-    /**
-     * @notice Admin function to set the liquidity mining module address
-     * @dev Removing the liquidity mining module address could cause the inconsistency in the LM module.
-     * @param newLiquidityMining The address of the new liquidity mining module
-     */
-    function _setLiquidityMining(address newLiquidityMining) external {
-        require(msg.sender == admin, "admin only");
-        require(LiquidityMiningInterface(newLiquidityMining).comptroller() == address(this), "mismatch comptroller");
-
-        // Save current value for inclusion in log
-        address oldLiquidityMining = liquidityMining;
-
-        // Store liquidityMining with value newLiquidityMining
-        liquidityMining = newLiquidityMining;
-
-        // Emit NewLiquidityMining(OldLiquidityMining, NewLiquidityMining)
-        emit NewLiquidityMining(oldLiquidityMining, liquidityMining);
     }
 
     /**
